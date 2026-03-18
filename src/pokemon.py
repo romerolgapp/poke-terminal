@@ -1,7 +1,7 @@
 from sprite import Sprite
 
 class Pokemon:
-    def __init__(self, name, type, sprite: Sprite):
+    def __init__(self, name, type: list, sprite: Sprite):
         self.name = name
         self.type = type
         self.sprite = sprite

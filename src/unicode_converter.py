@@ -8,6 +8,7 @@ class UnicodeConverter:
         empty_block = " "
 
         unicode_sprite = ""
+        unicode_sprite2 = ""
 
         # Función auxiliar para mostrar un bloque de color en la consola (para debug)
         # np.array([246, 213, 49, 255])
@@ -52,7 +53,7 @@ class UnicodeConverter:
         # Eliminamos el padding transparente alrededor de la imagen para optimizar el resultado
 
         # Ejemplo para una imagen de 4x4 píxeles:
-        # (y,x): (0,0) (0,1) (0,2) (0,3)
+        # (y,x): (0,0) (0,1) (0,2) (0,3) R G B
         #        (1,0) (1,1) (1,2) (1,3)
         #        (2,0) (2,1) (2,2) (2,3)
         #        (3,0) (3,1) (3,2) (3,3)
@@ -86,15 +87,13 @@ class UnicodeConverter:
                     r , g , b = bottom_pixel[:3]
                     ansi_code = f"\x1b[38;2;{r};{g};{b}m"+lower_block+"\x1b[0m"
                     unicode_sprite += ansi_code
-                    unicode_sprite += lower_block
-                    print(f"[UnicodeConverter] Píxel superior transparente, añadiendo bloque inferior)")
+                    print(f"[UnicodeConverter]   Píxel superior transparente, añadiendo bloque inferior ansi_code={ansi_code}")
                 # Caso: abajo no haya nada: "▀"
                 elif bottom_pixel[3] == 0:
                     r , g , b = top_pixel[:3]
                     ansi_code = f"\x1b[38;2;{r};{g};{b}m"+upper_block+"\x1b[0m"
                     unicode_sprite += ansi_code
-                    unicode_sprite += upper_block
-                    print(f"[UnicodeConverter] Píxel inferior transparente, añadiendo bloque superior)")
+                    print(f"[UnicodeConverter] Píxel inferior transparente, añadiendo bloque superior ansi_code={ansi_code}")
 
                 # Caso: ambos píxeles tienen color. Usamos "▀" con el color del pixel superior
                 # pero el background sera del pixel inferior
@@ -104,6 +103,7 @@ class UnicodeConverter:
                     # Añadimos 38: color de texto de arriba y 48: color de fondo de abajo
                     ansi_code = f"\x1b[38;2;{rtop};{gtop};{btop}m\x1b[48;2;{rbot};{gbot};{bbot}m"+upper_block+"\x1b[0m"
                     unicode_sprite += ansi_code
+                    print(f"[UnicodeConverter] ansi_code={ansi_code}")
                     print(f"[UnicodeConverter] Ambos píxeles tienen color, añadiendo bloque con colores combinados)")
 
             unicode_sprite += "\n" # Nueva línea al final de cada fila procesada
