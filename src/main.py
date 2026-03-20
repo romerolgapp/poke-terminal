@@ -8,8 +8,8 @@ from io import BytesIO
 from pathlib import Path
 from rich.console import Console
 from tempfile import NamedTemporaryFile
-from unicode_converter import UnicodeConverter
-from type import render_type_badge
+from render.unicode_converter import UnicodeConverter
+from models.type import render_type_badge
 
 from sprite import Sprite
 
